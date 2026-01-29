@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space for you</title>
+    <link rel="icon" href="./assets/icons/app_brand.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;600;700&family=Outfit:wght@300;400;600;700&family=Playfair+Display:wght@400;700&family=Dancing+Script:wght@600&family=Permanent+Marker&family=Handlee&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="desk.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+</head>
+
+<body>
+    <div id="mobile-warning">
+        <div class="warning-content">
+            <h1>Oops! Screen's a bit small...</h1>
+            <p>This special corner of memories shines brightest on a bigger canvas.
+                A Laptop or PC will let these moments breathe the way they deserve.</p>
+            <p>Catch you on the big screen!</p>
+        </div>
+    </div>
+
+    <div id="countdown-phase"
+        class="fixed inset-0 bg-[#020617] z-[60000] flex flex-col items-center justify-center text-white transition-opacity duration-1000 overflow-hidden">
+
+        <div class="absolute inset-0 z-0">
+            <div class="tech-grid"></div>
+            <div class="birthday-glow"></div>
+            <div class="particle-field" id="particle-field">
+                <div class="particle"
+                    style="left: 10%; width: 2px; height: 2px; animation-duration: 8s; animation-delay: 1s;"></div>
+                <div class="particle"
+                    style="left: 20%; width: 3px; height: 3px; animation-duration: 12s; animation-delay: 2s;"></div>
+                <div class="particle"
+                    style="left: 30%; width: 2px; height: 2px; animation-duration: 10s; animation-delay: 0s;"></div>
+                <div class="particle"
+                    style="left: 40%; width: 4px; height: 4px; animation-duration: 15s; animation-delay: 3s;"></div>
+                <div class="particle"
+                    style="left: 50%; width: 2px; height: 2px; animation-duration: 9s; animation-delay: 1.5s;"></div>
+                <div class="particle"
+                    style="left: 60%; width: 3px; height: 3px; animation-duration: 11s; animation-delay: 4s;"></div>
+                <div class="particle"
+                    style="left: 70%; width: 2px; height: 2px; animation-duration: 13s; animation-delay: 0.5s;"></div>
+                <div class="particle"
+                    style="left: 80%; width: 4px; height: 4px; animation-duration: 14s; animation-delay: 2.5s;"></div>
+                <div class="particle"
+                    style="left: 90%; width: 2px; height: 2px; animation-duration: 10s; animation-delay: 5s;"></div>
+                <div class="particle"
+                    style="left: 15%; width: 3px; height: 3px; animation-duration: 16s; animation-delay: 1s;"></div>
+                <div class="particle"
+                    style="left: 85%; width: 2px; height: 2px; animation-duration: 12s; animation-delay: 3.5s;"></div>
+            </div>
+            <div class="scan-beam"></div>
+        </div>
+
+        <div class="relative z-10 flex flex-col items-center">
+            <div class="mb-14 text-center">
+                <p class="text-[10px] tracking-[0.6em] uppercase font-bold text-blue-400/60 mb-4">OHH YOU ARE HERE
+                    EARLYYY 👀</p>
+                <p class="text-[10px] tracking-[0.6em] uppercase font-bold text-blue-400/60 mb-4">WAIT WITH ME TILL THE
+                    TIMER ENDS</p>
+            </div>
+
+            <div
+                class="countdown-container p-14 rounded-[40px] backdrop-blur-3xl shadow-2xl flex flex-col items-center">
+                <div id="countdown-display"
+                    class="text-6xl md:text-7xl font-thin font-mono tracking-[0.1em] text-white/90 neon-text-blue">
+                    --d --h --m --s</div>
+
+                <div class="relative w-[300px] md:w-[400px] h-[2px] bg-white/5 mt-12 rounded-full overflow-hidden">
+                    <div id="countdown-progress"
+                        class="absolute inset-y-0 left-0 bg-gradient-to-r from-blue-600 via-amber-400 to-blue-600 w-0 transition-all duration-1000">
+                    </div>
+                </div>
+
+                <div id="countdown-sub"
+                    class="mt-8 text-[10px] text-blue-300/40 tracking-[0.4em] uppercase font-bold italic">
+                    Loading Horizon...</div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="birthday-intro"
+        class="fixed inset-0 z-[20000] flex items-center justify-center text-center pointer-events-none hidden">
+
+        <div class="birthday-screen absolute inset-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-700"
+            data-screen="1">
+            <h1 class="text-3xl md:text-5xl font-serif holographic-text">Happy Happy Birthday Harshit!!</h1>
+        </div>
+
+        <div class="birthday-screen absolute inset-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-700"
+            data-screen="2">
+            <p class="text-lg text-pink-100/80 mb-6 font-light tracking-wide italic">Another year around the sun...</p>
+            <p class="text-2xl md:text-3xl font-serif text-white font-bold drop-shadow-xl">And you're still the bright
+                spot in mine.</p>
+        </div>
+
+        <div class="birthday-screen absolute inset-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-700"
+            data-screen="3" id="slide-cake">
+            <p class="text-2xl font-serif text-white mb-12 animate-bounce">Harshit...Close your eyes and make a wish 🌠
+            </p>
+
+            <div class="cake-container relative" title="Click individual candles to blow!">
+                <div class="candles-container">
+                    <div class="candle-num cursor-pointer" onclick="blowIndividualCandle(this.querySelector('.flame'))">
+                        1<div class="flame"></div>
+                    </div>
+                    <div class="candle-num cursor-pointer" onclick="blowIndividualCandle(this.querySelector('.flame'))">
+                        9<div class="flame"></div>
+                    </div>
+                </div>
+
+                <div class="cake-frosting"></div>
+                <div class="cake-layer top-layer"></div>
+                <div class="cake-layer middle-layer"></div>
+                <div class="cake-layer bottom-layer"></div>
+                <div class="plate"></div>
+            </div>
+
+            <p id="wish-msg"
+                class="mt-8 text-pink-300 opacity-0 transition-opacity duration-1000 font-serif italic text-lg"></p>
+        </div>
+
+        <div class="birthday-screen absolute inset-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-700"
+            data-screen="4" id="slide-cut">
+            <p id="cut-instruction" class="text-2xl font-serif text-white mb-24">Letss Cut the cakee</p>
+
+            <div class="cake-container relative cursor-pointer group" onclick="cutCake()" title="Click to cut!">
+                <div id="cake-whole" class="relative transition-transform duration-300 group-hover:scale-105">
+                    <div class="cake-frosting"></div>
+                    <div class="cake-layer top-layer"></div>
+                    <div class="cake-layer middle-layer"></div>
+                    <div class="cake-layer bottom-layer"></div>
+                    <div class="plate"></div>
+                </div>
+
+                <div
+                    class="knife absolute -right-10 -top-24 text-6xl transform -rotate-45 transition-all duration-500 z-50 group-hover:-translate-x-12 group-hover:translate-y-32 group-hover:rotate-0 pointer-events-none">
+                    🔪</div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="letter-overlay"
+        class="fixed inset-0 z-[50000] flex items-center justify-center bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-1000">
+        <div class="relative bg-[#fdfbf7] w-[90%] max-w-lg p-8 md:p-12 rounded-sm shadow-2xl transform scale-95 transition-transform duration-700"
+            id="letter-content">
+            <div class="absolute inset-0 opacity-10 pointer-events-none"
+                style="background-image: url('assets/images/pattern_paper.png');"></div>
+
+            <button onclick="closeLetter()"
+                class="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition-colors text-xl font-bold">&times;</button>
+
+            <div class="relative z-10 font-serif text-gray-800">
+                <h1 class="text-4xl md:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-600 mb-6 font-bold drop-shadow-sm animate-pulse"
+                    style="font-family: 'Dancing Script', cursive;">Happy Birthday!</h1>
+                <div class="space-y-4 text-lg leading-relaxed opacity-90">
+                    <p>To Harshit,</p>
+                    <p>If you are reading this, you successfully blew out the candle and cut the cake (CSS is hard,
+                        okay?). 😂</p>
+                    <p>I just wanted to say... <strong class="text-pink-500 font-serif text-xl">Happy Birthday</strong>.
+                    </p>
+                    <p>This entire OS is a collection of our moments, inside jokes, and the things that make "us".
+                        Explore the folders, find the hidden eggs (there are rabbits everywhere), and just know that you
+                        are appreciated.</p>
+                    <p>You matter. Your chaos matters. Your silence matters.</p>
+                    <p class="mt-8 text-right text-pink-500 font-bold"
+                        style="font-family: 'Dancing Script', cursive; font-size: 1.5em;">~ Shravii</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="gifts-overlay"
+        class="fixed inset-0 z-[50001] bg-[#020617] flex flex-col items-center justify-center p-4 hidden opacity-0 transition-opacity duration-1000 overflow-hidden">
+
+        <div class="absolute inset-0 z-0">
+            <div class="gifts-grid-bg"></div>
+            <div id="gifts-particles"></div>
+        </div>
+
+        <div class="relative z-10 w-full max-w-5xl flex flex-col items-center">
+            <div class="text-center mb-12">
+                <p class="text-[10px] tracking-[0.5em] uppercase font-bold text-blue-400/60 mb-3 animate-fade-in">
+                    UNBOXING MOMENTS</p>
+                <h2 class="text-3xl md:text-5xl font-serif text-white tracking-tight mb-4 animate-fade-in-up">There's
+                    something more...</h2>
+                <div class="w-24 h-[1px] bg-gradient-to-r from-transparent via-blue-500 to-transparent mx-auto"></div>
+            </div>
+
+
+            <div id="gift-selector" class="flex flex-wrap items-center justify-center gap-6 md:gap-12 mb-16">
+
+            </div>
+
+
+            <div id="gift-focus"
+                class="hidden fixed inset-0 z-50 flex items-center justify-center p-6 backdrop-blur-3xl animate-zoom-in">
+                <button onclick="closeGiftFocus()"
+                    class="absolute top-10 right-10 text-white/40 hover:text-white transition-colors text-3xl">&times;</button>
+
+                <div class="flex flex-col md:flex-row items-center gap-10 md:gap-16 max-w-4xl w-full">
+                    <div class="gift-image-container relative group">
+                        <div
+                            class="absolute -inset-4 bg-blue-500/20 rounded-2xl blur-2xl group-hover:bg-blue-500/30 transition-all">
+                        </div>
+                        <img id="focus-img" src=""
+                            class="relative w-full max-w-sm rounded-xl shadow-2xl border border-white/10 object-cover aspect-square">
+                    </div>
+
+                    <div class="flex-1 text-center md:text-left">
+                        <h3 id="focus-title"
+                            class="text-xl md:text-2xl font-bold text-blue-400 mb-4 tracking-wider uppercase font-mono">
+                            GIFT</h3>
+                        <p id="focus-desc" class="text-xl md:text-3xl font-serif text-white leading-relaxed italic"></p>
+                    </div>
+                </div>
+            </div>
+
+            <button id="gifts-continue-btn" onclick="finishGiftsPhase()"
+                class="opacity-0 translate-y-10 group relative px-10 py-3 overflow-hidden rounded-full transition-all duration-700 pointer-events-none">
+                <div
+                    class="absolute inset-0 bg-blue-500/10 border border-blue-500/30 group-hover:bg-blue-500/20 group-hover:border-blue-400/50 transition-all">
+                </div>
+                <span
+                    class="relative text-[11px] tracking-[0.3em] uppercase font-bold text-blue-200 group-hover:text-white">Start
+                    the Real Journey &rarr;</span>
+            </button>
+        </div>
+    </div>
+
+    <div id="space-bg" class="fixed inset-0 z-[0]">
+        <div class="stars-small"></div>
+        <div class="stars-medium"></div>
+        <div class="stars-large"></div>
+    </div>
+
+    <div id="journey-intro"
+        class="fixed inset-0 z-[20000] flex items-center justify-center text-center pointer-events-none">
+
+        <div class="journey-screen absolute inset-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-2000"
+            data-screen="1">
+            <p class="journey-text text-2xl md:text-3xl font-serif text-blue-100 drop-shadow-lg tracking-wide">Some
+                journeys don't start loudly.</p>
+        </div>
+
+        <div class="journey-screen absolute inset-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-2000"
+            data-screen="2">
+            <p class="journey-text small text-sm text-blue-300/70 mb-6 tracking-[0.2em] uppercase font-light">June 20,
+                2024 &nbsp;•&nbsp; 12:21 AM</p>
+            <p class="journey-text text-3xl font-serif text-white drop-shadow-xl">A conversation began.</p>
+        </div>
+
+        <div class="journey-screen absolute inset-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-2000"
+            data-screen="3">
+            <p class="journey-text text-2xl font-serif text-blue-100 mb-10 leading-relaxed">It wasn't instant.<br>It
+                became real slowly.</p>
+            <div class="space-y-4">
+                <p
+                    class="journey-sub opacity-0 transform translate-y-4 transition-all duration-1000 text-lg text-blue-200/80 font-light">
+                    Through talks.</p>
+                <p
+                    class="journey-sub opacity-0 transform translate-y-4 transition-all duration-1000 delay-500 text-lg text-blue-200/80 font-light">
+                    Through silence.</p>
+                <p
+                    class="journey-sub opacity-0 transform translate-y-4 transition-all duration-1000 delay-1000 text-lg text-blue-200/80 font-light">
+                    Through staying.</p>
+            </div>
+        </div>
+
+        <div class="journey-screen absolute inset-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-2000"
+            data-screen="4">
+            <p class="journey-text text-2xl font-serif text-white/90 leading-relaxed mb-4">Time tested it.</p>
+            <p
+                class="journey-sub opacity-0 transition-opacity duration-1000 delay-1000 text-2xl font-serif text-white font-semibold drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">
+                It held.</p>
+        </div>
+
+        <div class="journey-screen absolute inset-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-2000"
+            data-screen="5">
+            <p class="journey-text text-3xl font-serif text-white mb-10">So I made a place for it.</p>
+            <div class="space-y-3">
+                <p
+                    class="journey-sub opacity-0 transform translate-y-2 transition-all duration-1000 text-sm text-blue-300 tracking-widest uppercase">
+                    For the memories.</p>
+                <p
+                    class="journey-sub opacity-0 transform translate-y-2 transition-all duration-1000 delay-300 text-sm text-blue-300 tracking-widest uppercase">
+                    For the laughter.</p>
+                <p
+                    class="journey-sub opacity-0 transform translate-y-2 transition-all duration-1000 delay-600 text-sm text-blue-300 tracking-widest uppercase">
+                    For everything that stayed.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="boot-sequence" style="display:none; opacity:0;">
+        <p class="boot-line">initializing system...</p>
+        <p class="boot-line delay1">starting where it began...</p>
+        <p class="boot-line delay2">holding what mattered...</p>
+        <p class="boot-line delay2">time aligned...</p>
+        <p class="boot-line delay3">June 20, 2024 • 12:21 AM</p>
+        <p class="boot-line delay4">connection intact.</p>
+        <p class="boot-line delay5">space preparing…<span class="boot-cursor"></span></p>
+    </div>
+
+    <div id="terminal-boot"
+        class="fixed inset-0 bg-black z-[15000] hidden p-8 font-mono text-green-500 text-xs md:text-sm leading-tight overflow-hidden cursor-none">
+        <div id="terminal-content"></div>
+    </div>
+
+    <div id="password-screen"
+        class="fixed inset-0 z-[60000] bg-black flex flex-col items-center justify-center text-white hidden">
+        <div class="mb-8">
+            <h1 class="text-2xl font-serif tracking-widest text-center text-white/80">AUTHENTICATION REQUIRED</h1>
+            <p class="text-xs text-center text-white/40 font-mono mt-2">SECURE GATEWAY: Harshit OS</p>
+        </div>
+
+        <div class="relative">
+            <input type="password" id="login-password"
+                class="bg-transparent border-b-2 border-white/20 text-center text-3xl font-mono tracking-[0.5em] w-64 py-2 outline-none focus:border-blue-500 transition-colors text-white"
+                placeholder="****" maxlength="4" autocomplete="off" onkeydown="if(event.key === 'Enter') checkLogin()">
+            <div id="login-error"
+                class="absolute -bottom-8 left-0 w-full text-center text-red-400 text-xs font-mono tracking-wider opacity-0 transition-opacity">
+                ACCESS DENIED
+            </div>
+        </div>
+
+        <button onclick="checkLogin()"
+            class="mt-12 px-8 py-2 bg-white/10 hover:bg-white/20 rounded-full text-xs uppercase tracking-widest transition border border-white/10 text-white/60 hover:text-white">
+            Enter System
+        </button>
+    </div>
+
+    <div id="login-screen"
+        style="background-image: url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?q=80&w=2069'); background-size: cover; background-position: center;"
+        class="fixed inset-0 z-[60000] flex flex-col items-center justify-center text-white hidden opacity-0 transition-opacity duration-700">
+
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-xl"></div>
+
+        <div class="flex flex-col items-center gap-6 fade-in-up relative z-10">
+            <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-white/10 shadow-2xl relative">
+                <div class="absolute inset-0 bg-gradient-to-tr from-blue-500/20 to-purple-500/20"></div>
+                <img src="assets/images/user_avatar_new.png"
+                    onerror="this.src='https://ui-avatars.com/api/?name=H&background=0d9488&color=fff&size=128'"
+                    class="w-full h-full object-cover">
+            </div>
+            <div class="text-3xl font-serif font-bold tracking-wide drop-shadow-md">Harshit</div>
+
+            <div class="relative group mt-2">
+                <input type="password" id="desktop-password"
+                    class="bg-white/5 border border-white/10 rounded-full px-6 py-3 w-72 text-center text-white placeholder-white/30 focus:outline-none focus:bg-white/10 focus:border-white/30 transition-all duration-300 backdrop-blur-md shadow-inner text-lg letter-spacing-widest"
+                    placeholder="Enter Password" onkeydown="if(event.key === 'Enter') checkDesktopPassword()">
+                <div class="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer text-white/40 hover:text-white transition transform hover:scale-110"
+                    onclick="checkDesktopPassword()">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </div>
+
+            <p id="login-msg"
+                class="h-6 text-sm text-rose-400 opacity-0 transition-opacity font-light tracking-wider mt-2">Incorrect
+                Password</p>
+
+            <div class="absolute bottom-12 text-center">
+            </div>
+        </div>
+    </div>
+
+    <div id="desktop-bg"></div>
+
+    <audio id="bg-music" loop>
+        <source src="https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3">
+    </audio>
+
+    <main id="desktop">
+        <div id="bg-snow-container" class="fixed inset-0 pointer-events-none z-0"></div>
+        <div id="bg-rain-container" class="fixed inset-0 pointer-events-none z-0"></div>
+        <div id="frost-vignette" class="fixed inset-0 pointer-events-none z-[5000]"></div>
+        <div id="snow-pile" class="fixed bottom-0 left-0 w-full pointer-events-none z-[2]"></div>
+
+        <div class="macos-menu-bar">
+
+            <div class="macos-menu-left">
+                <div class="menu-item-apple cursor-pointer px-2" onclick="toggleMenu('apple-menu')">
+                    <img src="./assets/icons/app_brand.png" alt="logo"
+                        style="width: 20px; height: 20px; filter: drop-shadow(0 0 5px rgba(255,255,255,0.3));">
+                </div>
+
+                <div id="apple-menu"
+                    class="absolute top-8 left-0 w-56 bg-[rgba(30,30,30,0.9)] backdrop-blur-xl rounded-lg border border-white/10 shadow-xl hidden flex-col py-1.5 z-50 text-white/90 font-light">
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer" onclick="System.about()">About
+                        This Mac</div>
+                    <div class="h-[1px] bg-white/10 my-1"></div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer" onclick="System.settings()">
+                        System Preferences...</div>
+                    <div class="h-[1px] bg-white/10 my-1"></div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer" onclick="System.sleep()">Sleep
+                    </div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer" onclick="System.restart()">
+                        Restart...</div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer" onclick="System.shutdown()">
+                        Shut Down...</div>
+                </div>
+
+                <span id="menubar-app-name" class="font-bold px-1 cursor-default">Finder</span>
+
+                <span class="opacity-90 hover:opacity-100 cursor-pointer px-2"
+                    onclick="toggleMenu('file-menu')">File</span>
+                <div id="file-menu"
+                    class="absolute top-8 left-20 w-48 bg-[rgba(30,30,30,0.9)] backdrop-blur-xl rounded-lg border border-white/10 shadow-xl hidden flex-col py-1.5 z-50 text-white/90 font-light">
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="Apps.open('folder-system')">New Finder Window</div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="triggerAction('new-folder')">New Folder</div>
+                </div>
+
+                <span class="opacity-90 hover:opacity-100 cursor-pointer px-2"
+                    onclick="toggleMenu('edit-menu')">Edit</span>
+                <div id="edit-menu"
+                    class="absolute top-8 left-32 w-48 bg-[rgba(30,30,30,0.9)] backdrop-blur-xl rounded-lg border border-white/10 shadow-xl hidden flex-col py-1.5 z-50 text-white/90 font-light">
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer opacity-50">Undo</div>
+                    <div
+                        class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer opacity-50 border-b border-white/10 pb-1 mb-1">
+                        Redo</div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="createModal({ title: 'Cut', desc: 'Clipboard is empty.', icon: '✂️' })">Cut</div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="createModal({ title: 'Copy', desc: 'Copied to imaginary clipboard.', icon: '📋' })">
+                        Copy</div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="createModal({ title: 'Paste', desc: 'Nothing to paste.', icon: '📋' })">Paste</div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="triggerAction('select-all')">Select All</div>
+                </div>
+
+                <span class="opacity-90 hover:opacity-100 cursor-pointer px-2"
+                    onclick="toggleMenu('view-menu')">View</span>
+                <div id="view-menu"
+                    class="absolute top-8 left-44 w-48 bg-[rgba(30,30,30,0.9)] backdrop-blur-xl rounded-lg border border-white/10 shadow-xl hidden flex-col py-1.5 z-50 text-white/90 font-light">
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="triggerAction('toggle-fullscreen')">Enter Full Screen</div>
+                    <div class="h-[1px] bg-white/10 my-1"></div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="triggerAction('zoom-in')">Zoom In</div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="triggerAction('zoom-out')">Zoom Out</div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="triggerAction('reset-zoom')">Actual Size</div>
+                </div>
+
+                <span class="opacity-90 hover:opacity-100 cursor-pointer px-2" onclick="toggleMenu('go-menu')">Go</span>
+                <div id="go-menu"
+                    class="absolute top-8 left-56 w-48 bg-[rgba(30,30,30,0.9)] backdrop-blur-xl rounded-lg border border-white/10 shadow-xl hidden flex-col py-1.5 z-50 text-white/90 font-light">
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="triggerAction('go-back')">Back</div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="triggerAction('go-forward')">Forward</div>
+                    <div class="h-[1px] bg-white/10 my-1"></div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="Apps.open('folder-system')">System Core</div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="Apps.open('folder-feelings')">Soft Stuff</div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="Apps.open('folder-fun')">Unstable Features</div>
+                    <div class="h-[1px] bg-white/10 my-1"></div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="triggerAction('min-all')">Desktop</div>
+                </div>
+
+                <span class="opacity-90 hover:opacity-100 cursor-pointer px-2"
+                    onclick="toggleMenu('window-menu')">Window</span>
+                <div id="window-menu"
+                    class="absolute top-8 left-64 w-48 bg-[rgba(30,30,30,0.9)] backdrop-blur-xl rounded-lg border border-white/10 shadow-xl hidden flex-col py-1.5 z-50 text-white/90 font-light">
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="triggerAction('min-all')">Minimize All</div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="triggerAction('close-all')">Close All</div>
+                </div>
+
+                <span class="opacity-90 hover:opacity-100 cursor-pointer px-2"
+                    onclick="toggleMenu('help-menu')">Help</span>
+                <div id="help-menu"
+                    class="absolute top-8 left-80 w-48 bg-[rgba(30,30,30,0.9)] backdrop-blur-xl rounded-lg border border-white/10 shadow-xl hidden flex-col py-1.5 z-50 text-white/90 font-light">
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="createModal({ title: 'Harshit OS Help', desc: 'Welcome to Harshit OS v19.0! 🚀<br><br>• Explore apps via the Dock<br>• Right-click desktop for options<br>• Use the Menu Bar for quick actions<br><br>Enjoy your stay! ✨', icon: '💡' })">
+                        Harshit OS Help</div>
+                </div>
+            </div>
+
+            <div class="macos-menu-right">
+
+                <div class="flex items-center gap-2 cursor-default" title="Battery Utility">
+                    <span id="battery-level" class="text-xs font-medium opacity-80">--%</span>
+                    <i id="battery-icon" class="fas fa-battery-half text-[14px] opacity-80"></i>
+                </div>
+
+                <div class="cursor-pointer" title="Network Status">
+                    <i id="wifi-icon" class="fas fa-wifi text-[14px]"></i>
+                </div>
+
+                <div class="cursor-pointer" onclick="toggleSpotlight()">
+                    <i class="fas fa-search text-[14px]"></i>
+                </div>
+
+                <div class="cursor-pointer" onclick="toggleControlCenter()">
+                    <i class="fas fa-sliders-h text-[14px]"></i>
+                </div>
+
+                <div id="control-center"
+                    class="absolute top-10 right-0 w-80 bg-[rgba(30,30,30,0.8)] backdrop-blur-2xl rounded-2xl border border-white/10 shadow-2xl hidden p-4 z-[9999] transition-all duration-200">
+                    <div class="grid grid-cols-2 gap-3 mb-4">
+
+                        <div class="bg-white/10 rounded-xl p-3 flex flex-col gap-3">
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white">
+                                    <i class="fas fa-wifi"></i>
+                                </div>
+                                <div class="flex flex-col"><span class="text-xs font-semibold">Wi-Fi</span><span
+                                        class="text-[10px] opacity-60">Home</span></div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white">
+                                    <i class="fab fa-bluetooth-b"></i>
+                                </div>
+                                <div class="flex flex-col"><span class="text-xs font-semibold">Bluetooth</span><span
+                                        class="text-[10px] opacity-60">On</span></div>
+                            </div>
+                        </div>
+
+                        <div
+                            class="bg-white/10 rounded-xl p-3 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-white/20 transition">
+                            <div
+                                class="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-white mb-2">
+                                <i class="fas fa-moon"></i>
+                            </div>
+                            <span class="text-xs font-semibold">Do Not Disturb</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white/10 rounded-xl p-3 mb-3">
+                        <div class="text-[10px] font-semibold mb-2 uppercase opacity-50 tracking-wide">Display</div>
+                        <input type="range" id="brightness-slider"
+                            class="w-full h-1 bg-white/20 rounded-full appearance-none cursor-pointer" min="10"
+                            max="100" value="100">
+                    </div>
+                    <div class="bg-white/10 rounded-xl p-3">
+                        <div class="text-[10px] font-semibold mb-2 uppercase opacity-50 tracking-wide">Sound</div>
+                        <input type="range" class="w-full h-1 bg-white/20 rounded-full appearance-none cursor-pointer"
+                            min="1" max="100" value="60">
+                    </div>
+
+                    <div class="system-uptime">
+                        <p class="uptime-label">Uptime</p>
+                        <p class="uptime-main">Since June 20, 2024</p>
+                        <p class="uptime-sub">No unexpected shutdowns.</p>
+                    </div>
+                </div>
+
+                <div class="weather-widget" title="Current Mood">
+                    <i id="weather-icon" class="fas fa-cloud text-blue-300"></i>
+                    <span id="weather-text" class="ml-2 font-medium">Loading...</span>
+
+                    <div class="weather-tooltip">Weather Mood System ⛅</div>
+                </div>
+
+                <span id="clock"
+                    class="text-[13px] font-medium min-w-[220px] text-right cursor-pointer hover:text-blue-200 transition-colors"
+                    onclick="toggleCalendar()" title="Show Calendar">--:--</span>
+            </div>
+
+            <div id="mini-calendar"
+                class="fixed top-10 right-2 w-64 bg-[rgba(30,30,30,0.9)] backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl hidden p-4 z-[6000] text-white animate-zoom-in">
+                <div class="flex justify-between items-center mb-4 select-none">
+                    <div class="cursor-pointer hover:text-blue-400 hover:scale-110 transition p-1"
+                        onclick="changeMonth(-1)">❮</div>
+                    <div class="flex gap-2 items-baseline">
+                        <span id="cal-month" class="font-bold text-lg">Month</span>
+                        <span id="cal-year" class="text-gray-400 text-sm">Year</span>
+                    </div>
+                    <div class="cursor-pointer hover:text-blue-400 hover:scale-110 transition p-1"
+                        onclick="changeMonth(1)">❯</div>
+                </div>
+                <div class="grid grid-cols-7 gap-1 text-center text-xs text-gray-400 mb-2">
+                    <div>Su</div>
+                    <div>Mo</div>
+                    <div>Tu</div>
+                    <div>We</div>
+                    <div>Th</div>
+                    <div>Fr</div>
+                    <div>Sa</div>
+                </div>
+                <div id="cal-days" class="grid grid-cols-7 gap-1 text-center text-sm font-medium">
+
+                </div>
+                <div class="mt-4 pt-3 border-t border-white/10 text-center">
+                    <div class="text-xs text-blue-300">No events today.</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="spotlight-overlay" class="hidden fixed inset-0 z-[10000] flex items-start justify-center pt-[20vh]"
+            onclick="if(event.target === this) toggleSpotlight()">
+            <div
+                class="w-[600px] bg-[rgba(30,30,40,0.85)] backdrop-blur-3xl border border-white/20 rounded-xl shadow-2xl flex flex-col overflow-hidden animate-fade-in-up">
+                <div class="flex items-center p-4 border-b border-white/10">
+                    <i class="fas fa-search text-white/50 text-xl mr-4"></i>
+                    <input type="text" id="spotlight-input"
+                        class="bg-transparent border-none outline-none text-white text-2xl font-light w-full placeholder-white/30"
+                        placeholder="Spotlight Search" autocomplete="off">
+                </div>
+                <div id="spotlight-results" class="max-h-[300px] overflow-y-auto hidden">
+                </div>
+            </div>
+        </div>
+
+        <div id="brightness-dimmer"
+            class="fixed inset-0 bg-black pointer-events-none z-[999999] opacity-0 transition-opacity duration-100">
+        </div>
+
+        <div id="desktop-grid"></div>
+
+        <div id="dock-container">
+            <div id="dock-hint">This space stays.</div>
+            <div id="dock"></div>
+        </div>
+
+        <div id="desktop-pet"
+            class="fixed bottom-24 right-10 w-32 h-32 cursor-pointer z-10 transition-transform hover:scale-110"
+            onclick="togglePet()" title="Click to change me!">
+            <img id="pet-img" src="assets/gifs/milk-run.gif" class="w-full h-full object-contain filter drop-shadow-xl">
+        </div>
+
+        <div id="crack" class="crack"></div>
+
+
+
+    </main>
+
+    <div id="ctx-menu">
+        <div class="ctx-item" onclick="Apps.open('about-us')"><i class="fas fa-user-circle"></i> View Identity</div>
+        <div class="ctx-item" onclick="System.settings()"><i class="fas fa-image text-purple-400"></i> Change Wallpaper
+        </div>
+        <div class="ctx-item" onclick="showHugAnimation()"><i class="fas fa-heart text-pink-500"></i> Send Virtual Hug
+        </div>
+        <div class="ctx-sep"></div>
+        <div id="ctx-delete" class="ctx-item text-red-500 hidden" onclick="deleteTarget()"><i
+                class="fas fa-trash-alt"></i> Delete</div>
+        <div class="ctx-item" onclick="spawnBears()"><i class="fas fa-paw text-brown-500"></i> Masti Mode</div>
+        <div class="ctx-item" onclick="location.reload()"><i class="fas fa-redo"></i> Restart System</div>
+    </div>
+
+    <div id="custom-modal-overlay">
+        <div class="modal-box">
+            <div id="modal-icon" class="modal-icon">✨</div>
+            <div id="modal-title" class="modal-title">Notification</div>
+            <div id="modal-desc" class="modal-desc">This is a system message.</div>
+            <div id="modal-input-container" class="hidden">
+                <input type="text" id="modal-input" class="modal-input" placeholder="Type here...">
+            </div>
+            <div class="modal-buttons">
+                <button id="modal-btn-cancel" class="modal-btn secondary" onclick="closeModal()">Cancel</button>
+                <button id="modal-btn-confirm" class="modal-btn primary">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="update-modal-overlay"
+        class="fixed inset-0 z-[70000] bg-black/60 backdrop-blur-md hidden items-center justify-center opacity-0 transition-opacity duration-500">
+        <div class="bg-white rounded-2xl shadow-2xl w-[500px] overflow-hidden transform scale-95 transition-transform duration-500"
+            id="update-modal-box">
+            <div class="h-10 bg-[#f1f1f1] border-b border-gray-200 flex items-center px-4">
+                <div class="flex gap-2">
+                    <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                </div>
+                <div class="flex-1 text-center text-[11px] font-semibold text-gray-500 uppercase tracking-wider">
+                    Software Update</div>
+            </div>
+            <div class="p-8 flex flex-col items-center text-center">
+                <div class="relative mb-6">
+                    <div class="text-7xl">🚀</div>
+                    <div
+                        class="absolute -top-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white animate-bounce">
+                        1</div>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Harshit OS v20.0</h2>
+                <p class="text-sm text-gray-500 mb-6 font-sans">A major update is available for your special space. It
+                    includes new memories, enhanced vibes, and the 2027 Birthday sequence.</p>
+
+                <div class="w-full bg-gray-100 rounded-lg p-4 mb-8 text-left">
+                    <div class="text-[10px] font-bold text-blue-600 uppercase mb-2 tracking-widest font-mono">Release
+                        Notes</div>
+                    <ul class="text-[11px] text-gray-600 space-y-1 ml-4 list-disc font-sans">
+                        <li>Critical Birthday Sequence 2027 Optimization</li>
+                        <li>Advanced Haptic Virtual Hugs v2.0</li>
+                        <li>Improved Inside Joke Recall Algorithms</li>
+                        <li>Security Patch: Enhanced Protection for Secret Memories</li>
+                    </ul>
+                </div>
+
+                <div id="update-progress-container" class="w-full hidden mb-6">
+                    <div class="flex justify-between text-[10px] font-bold text-gray-400 uppercase mb-2 font-mono">
+                        <span id="update-status">Downloading Updates...</span>
+                        <span id="update-percent">0%</span>
+                    </div>
+                    <div class="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                        <div id="update-progress-bar" class="h-full bg-blue-500 w-0 transition-all duration-300"></div>
+                    </div>
+                </div>
+
+                <button id="install-update-btn" onclick="startUpdateInstallation()"
+                    class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-blue-500/20 active:scale-95 font-sans">
+                    Update Now
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="desk.js"></script>
+</body>
+
+</html>
