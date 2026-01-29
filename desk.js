@@ -1353,36 +1353,6 @@ function triggerAction(action) {
 const affirmations = ["You stay kind, even when things get heavy.", "You don’t give up easily.", "You carry storms quietly.", "You are enough, exactly as you are."];
 
 
-function startSimpleCountdown() {
-    const countdownElement = document.getElementById('initial-countdown');
-    if (!countdownElement) {
-        playBirthdaySequence(); // Fallback if element is missing
-        return;
-    }
-
-    let count = 10;
-    countdownElement.textContent = count;
-
-    const interval = setInterval(() => {
-        count--;
-        if (count >= 0) {
-            countdownElement.textContent = count;
-        }
-        if (count === 0) {
-            countdownElement.textContent = "🎉";
-        }
-        if (count < 0) {
-            clearInterval(interval);
-            countdownElement.style.transition = 'opacity 1s ease-out';
-            countdownElement.style.opacity = '0';
-            setTimeout(() => {
-                countdownElement.style.display = 'none';
-                playBirthdaySequence();
-            }, 1000);
-        }
-    }, 1000);
-}
-
 function startCountdownGatekeeper() {
     const cdScreen = document.getElementById('countdown-phase');
     const cdDisplay = document.getElementById('countdown-display');
@@ -1392,11 +1362,10 @@ function startCountdownGatekeeper() {
     const now = new Date();
 
     const skipStart = new Date(2026, 0, 30, 0, 0, 0);
-    const nextBirthday = new Date(2027, 0, 30, 0, 0, 0);
 
-    if (now >= skipStart && now < nextBirthday) {
+    if (now >= skipStart) {
         if (cdScreen) cdScreen.style.display = 'none';
-        runSystemBoot();
+        playBirthdaySequence();
         return;
     }
 
@@ -6154,14 +6123,14 @@ function fireConfetti() {
     }
 }
 document.addEventListener('DOMContentLoaded', () => {
-    // Start the simple 10-second countdown
-    startSimpleCountdown();
-
-    // Initialize context menu
-    initContextMenu();
-
-    // Setup battery icon
-    setupBattery();
+    const checkDesktop = setInterval(() => {
+        const desktop = document.getElementById('desktop');
+        if (desktop && window.getComputedStyle(desktop).display !== 'none') {
+            clearInterval(checkDesktop);
+            setTimeout(initNotificationSystem, 3000);
+            setTimeout(checkForSystemUpdates, 5000);
+        }
+    }, 500);
 });
 
 console.log('%c[Notification System]  Loaded and ready', 'color: #ec4899; font-weight: bold;');
