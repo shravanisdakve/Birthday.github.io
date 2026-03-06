@@ -3060,7 +3060,10 @@ function showTheEnd() {
 
 window.Apps = Apps;
 window.onload = function () {
-    startCountdownGatekeeper();
+    // startCountdownGatekeeper();
+    const cdScreen = document.getElementById('countdown-phase');
+    if (cdScreen) cdScreen.style.display = 'none';
+    runSystemBoot();
     initHappyMenuBar();
 };
 
