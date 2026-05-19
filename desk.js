@@ -1,4 +1,4 @@
-﻿let hasShownTimeGreeting = false;
+let hasShownTimeGreeting = false;
 
 function getTimePhase(hours) {
     if (hours >= 6 && hours < 12) return 'morning';
@@ -930,7 +930,7 @@ const apps = [
     </div>
 `},
     {
-        id: 'soft-core', title: 'Soft Core', icon: '<img src="./assets/icons/app_softcore.png" alt="softcore" style="width: 100%; height: 100%;">', dock: true, folder: 'folder-system', width: 800, height: 600, content: `
+        id: 'soft-core', title: 'Soft Core', icon: '<img src="./assets/icons/app_capsule_new.png" alt="softcore" style="width: 100%; height: 100%;">', dock: true, folder: 'folder-system', width: 800, height: 600, content: `
     <div class="h-full bg-gradient-to-br from-slate-50 to-indigo-50/50 p-8 flex flex-col items-center relative overflow-hidden">
         <!-- Background Watermark -->
         <div class="absolute top-[-20px] right-[-20px] text-[180px] font-serif font-bold text-slate-100 select-none z-0 rotate-12">SOFT</div>
